@@ -63,7 +63,7 @@ func Parse(query string) (KQUERY, error) {
          if err != nil {
             return kq, err
          }
-         kq.regex = true
+         kq.Regex = true
          PATTERN = false
       } else if tok != WS {
          var err error
@@ -98,7 +98,7 @@ func deconstruct(kq KQUERY, tok Token, lit string) (KQUERY, error) {
       if KeywordMap[lit] == 0 {
          return kq, fmt.Errorf("Invalid function: %s", lit)
       } else {
-         kq.function = tok
+         kq.Function = tok
          keyword = false
          bucket = true
          return kq, nil
@@ -116,19 +116,19 @@ func deconstruct(kq KQUERY, tok Token, lit string) (KQUERY, error) {
          bucket = false
          newname = true
       } else {
-         kq.buckets = extendslice(kq.buckets, lit)
+         kq.Buckets = extendslice(kq.Buckets, lit)
       }
       return kq, nil
    }
 
    if key == true {
-      kq.key = lit
+      kq.Key = lit
       key = false       //key added, can only be one
       return kq, nil
    }
 
    if value == true {
-      kq.value = lit
+      kq.Value = lit
       value = false        //value added, can only be one
       return kq, nil
    }
@@ -148,7 +148,7 @@ func deconstruct(kq KQUERY, tok Token, lit string) (KQUERY, error) {
    }
 
    if newname == true {
-      kq.newname = lit
+      kq.Newname = lit
       return kq, nil
    }
 
