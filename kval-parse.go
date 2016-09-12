@@ -181,6 +181,13 @@ func validatequerystruct(kq KQUERY) (KQUERY, error) {
          return kq, fmt.Errorf("xxxxx")  
       }    
    }
+
+   /*
+      if (kq.Function == GET || kq.Function == INS) && (kq.Key == "_" && kq.Value == "") {
+      return kq, fmt.Errorf("Unknown unknown: Cannot seek unknown key and value.")
+   }
+   */
+
    return kq, nil
 }
 
