@@ -28,6 +28,7 @@ var (
    kq0c = KQUERY{DEL, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "_", "", false}
    kq0d = KQUERY{REN, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "", "New Key", false}
    kq0e = KQUERY{REN, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "", "", "Third Bucket", false}
+   //non-reference-queries
    kq0f = KQUERY{INS, []string{"Prime Bucket"}, "", "", "", false}
    kq10 = KQUERY{INS, []string{"Prime Bucket"}, "key", "", "", false}
    kq11 = KQUERY{INS, []string{"Prime Bucket"}, "key", "value", "", false}
