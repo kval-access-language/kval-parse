@@ -184,12 +184,10 @@ func validatequerystruct(kq KQUERY) (KQUERY, error) {
          }
       }    
    }
-
    //unless we want this to be a synonym for getting all values from a bucket...
    if (kq.Function == GET || kq.Function == LIS) && (kq.Key == "_" && kq.Value == "") {
       return kq, fmt.Errorf("Unknown unknown: Cannot seek unknown key and value.")
    }
-
    return kq, nil
 }
 
