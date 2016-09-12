@@ -84,9 +84,10 @@ func Parse(query string) (KQUERY, error) {
             }
          }
       } 
-   }   
+   }
 
-   return kq, nil
+   //return kq, nil
+   return validatequerystruct(kq)   
 }
 
 func deconstruct(kq KQUERY, tok Token, lit string) (KQUERY, error) {
@@ -162,6 +163,14 @@ func validatepattern(pattern string) (string, error) {
       err = fmt.Errorf("Invalid regex: Cannot compile regular expression.")
    }
    return pattern, err
+}
+
+func validatequerystruct(kq KQUERY) (KQUERY, error) {
+   //check for buckets
+   if len(kq.Buckets) < 1 {
+      return kq, fmt.Errorf("Zero buckets: No buckets specified in input query.")
+   }
+   return kq, nil
 }
 
 func extendslice(slice []string, element string) []string {

@@ -1,5 +1,7 @@
 package kvalparse
 
+import "fmt"
+
 /*
 type KQUERY struct { 
    function Token
@@ -28,7 +30,7 @@ var (
 )
 
 //Queries that should work according to the KVAL specification
-var GoodQueryMap = map[string]string{
+var GoodQueryMap = map[string]string {
    "kq01_insert_value": "INS Prime Bucket >> Secondary Bucket >> Tertiary Bucket >>>> Key :: Value",
    "kq02_get_bucket_contents": "GET Prime Bucket >> Secondary Bucket >> Tertiary Bucket",  
    "kq03_get_value": "GET Prime Bucket >> Secondary Bucket >> Tertiary Bucket >>>> Key",
@@ -44,7 +46,7 @@ var GoodQueryMap = map[string]string{
    "kq0d_rename_bucket": "REN Prime Bucket >> Secondary Bucket >> Tertiary Bucket => Third Bucket",   
 }
 
-var GoodQueryExpected = map[string]KQUERY{
+var GoodQueryExpected = map[string]KQUERY {
    "kq01_insert_value": kq01,
    "kq02_get_bucket_contents": kq02,
    "kq03_get_value": kq03,
@@ -58,4 +60,12 @@ var GoodQueryExpected = map[string]KQUERY{
    "kq0b_delete_value": kq0b,
    "kq0c_rename_key": kq0c,
    "kq0d_rename_bucket": kq0d,
+}
+
+var BadQueryMap = map[string]string {
+   "badkq01_no_buckets": "INS",
+}
+
+var BadQueryExpected = map[string]error {
+   "badkq01_no_buckets" : fmt.Errorf("Zero buckets: No buckets specified in input query."),
 }
