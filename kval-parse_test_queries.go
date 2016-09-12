@@ -78,6 +78,8 @@ var BadQueryMap = map[string]string {
    "badkq04_ins_regex": "INS Prime Bucket >>>> {PATT} :: {PATT}",
    "badkq05_get_val": "GET Prime Bucket >>>> known :: unknown",              //if we know value, we don't need get
    "badkq06_lis_val": "LIS Prime Bucket >>>> known :: unknown",              //validate for yourself, for many reasons!   
+   "badkq07_get_unknown": "GET Prime Bucket >>>> _",
+   "badkq08_lis_unknown": "LIS Prime Bucket >>>> _",
 }
 
 var BadQueryExpected = map[string]error {
@@ -87,4 +89,6 @@ var BadQueryExpected = map[string]error {
    "badkq04_ins_regex": fmt.Errorf("Invalid Pattern use: Can't have regex on insert."),
    "badkq05_get_val": fmt.Errorf("Known Value: No need to GET a known value."), 
    "badkq06_lis_val": fmt.Errorf("Known Value: No need to LIS a known value."),     
+   "badkq07_get_unknown": fmt.Errorf("Unknown unknown: Cannot seek unknown key and value."),
+   "badkq08_lis_unknown": fmt.Errorf("Unknown unknown: Cannot seek unknown key and value."),
 }
