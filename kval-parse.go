@@ -174,11 +174,14 @@ func validatequerystruct(kq KQUERY) (KQUERY, error) {
       return kq, fmt.Errorf("Invalid Pattern use: Can't have regex on insert.")
    }
    if (kq.Function == LIS || kq.Function == GET) && kq.Regex != true {
-      fmt.Println(kq)
       if kq.Key != "" && kq.Key != "_" {
-         fmt.Println(kq)
-         fmt.Println("xxxxxx")
-         return kq, fmt.Errorf("xxxxx")  
+         if kq.Value != "" {
+            if kq.Function == GET {
+               return kq, fmt.Errorf("Known Value: No need to GET a known value.")  
+            } else {
+               return kq, fmt.Errorf("Known Value: No need to LIS a known value.")  
+            }
+         }
       }    
    }
 

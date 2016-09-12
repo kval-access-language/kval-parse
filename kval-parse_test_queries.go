@@ -49,7 +49,7 @@ var GoodQueryMap = map[string]string {
    "kq0d_rename_bucket": "REN Prime Bucket >> Secondary Bucket >> Tertiary Bucket => Third Bucket",   
    "kq0e_one_bucket": "INS Prime Bucket",   
    "kq0f_one_bucket_key": "INS Prime Bucket >>>> key",   
-   "kq10_one_bucker_key_value": "INS Prime Bucket >>>> key :: value",   
+   "kq10_one_bucket_key_value": "INS Prime Bucket >>>> key :: value",   
 }
 
 var GoodQueryExpected = map[string]KQUERY {
@@ -68,7 +68,7 @@ var GoodQueryExpected = map[string]KQUERY {
    "kq0d_rename_bucket": kq0d,
    "kq0e_one_bucket": kq0e,   
    "kq0f_one_bucket_key": kq0f,   
-   "kq10_one_bucker_key_value": kq10,
+   "kq10_one_bucket_key_value": kq10,
 }
 
 var BadQueryMap = map[string]string {
@@ -77,7 +77,7 @@ var BadQueryMap = map[string]string {
    "badkq03_ins_regex": "INS Prime Bucket >>>> key :: {PATT}",
    "badkq04_ins_regex": "INS Prime Bucket >>>> {PATT} :: {PATT}",
    "badkq05_get_val": "GET Prime Bucket >>>> known :: unknown",              //if we know value, we don't need get
-   "badkq05_lis_val": "LIS Prime Bucket >>>> known :: unknown",              //validate for yourself, for many reasons!   
+   "badkq06_lis_val": "LIS Prime Bucket >>>> known :: unknown",              //validate for yourself, for many reasons!   
 }
 
 var BadQueryExpected = map[string]error {
@@ -86,5 +86,5 @@ var BadQueryExpected = map[string]error {
    "badkq03_ins_regex": fmt.Errorf("Invalid Pattern use: Can't have regex on insert."),
    "badkq04_ins_regex": fmt.Errorf("Invalid Pattern use: Can't have regex on insert."),
    "badkq05_get_val": fmt.Errorf("Known Value: No need to GET a known value."), 
-   "badkq05_lis_val": fmt.Errorf("Known Value: No need to LIS a known value."),     
+   "badkq06_lis_val": fmt.Errorf("Known Value: No need to LIS a known value."),     
 }
