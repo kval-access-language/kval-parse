@@ -170,6 +170,10 @@ func validatequerystruct(kq KQUERY) (KQUERY, error) {
    if len(kq.Buckets) < 1 {
       return kq, fmt.Errorf("Zero buckets: No buckets specified in input query.")
    }
+   
+   if kq.Function == INS && kq.Regex == true {
+      return kq, fmt.Errorf("Invalid Pattern use: Can't have regex on insert.")
+   }   
    return kq, nil
 }
 

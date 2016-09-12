@@ -64,8 +64,18 @@ var GoodQueryExpected = map[string]KQUERY {
 
 var BadQueryMap = map[string]string {
    "badkq01_no_buckets": "INS",
+   "badkq02_ins_regex": "INS Prime Bucket >>> {PATT}",
+   "badkq03_ins_regex": "INS Prime Bucket >>> key :: {PATT}",
+   "badkq04_ins_regex": "INS Prime Bucket >>> {PATT} :: {PATT}",
+   "badkq05_get_val": "GET Prime Bucket >>> key :: value",              //if we know value, we don't need get
+   "badkq05_lis_val": "LIS Prime Bucket >>> key :: value",              //validate for yourself, for many reasons!   
 }
 
 var BadQueryExpected = map[string]error {
-   "badkq01_no_buckets" : fmt.Errorf("Zero buckets: No buckets specified in input query."),
+   "badkq01_no_buckets": fmt.Errorf("Zero buckets: No buckets specified in input query."),
+   "badkq02_ins_regex": fmt.Errorf("Invalid Pattern use: Can't have regex on insert."),
+   "badkq03_ins_regex": fmt.Errorf("Invalid Pattern use: Can't have regex on insert."),
+   "badkq04_ins_regex": fmt.Errorf("Invalid Pattern use: Can't have regex on insert."),
+   "badkq05_get_val": fmt.Errorf("Known Value: No need to GET a known value."), 
+   "badkq05_lis_val": fmt.Errorf("Known Value: No need to LIS a known value."),     
 }

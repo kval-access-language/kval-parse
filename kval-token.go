@@ -43,4 +43,3 @@ var KeywordMap = map[string]int{
    "DEL":   0x4,         // Delete values
    "REN":   0x5,         // Rename values   
 }
-

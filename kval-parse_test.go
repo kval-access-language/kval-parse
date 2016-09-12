@@ -30,6 +30,8 @@ func TestParse(t *testing.T) {
          if !reflect.DeepEqual(err, BadQueryExpected[key]) {
             t.Errorf("FAIL: Query parsed incorrectly: \n %s \n %v \n %v", query, kq, BadQueryExpected[key])
          }
+      } else if err == nil {
+         t.Errorf("FAIL: Expecting error for query: \n %s \n %v", query, BadQueryExpected[key])   
       }
    }
 }
