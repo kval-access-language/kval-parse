@@ -27,6 +27,9 @@ var (
    kq0b = KQUERY{DEL, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "_", "", false}
    kq0c = KQUERY{REN, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "", "New Key", false}
    kq0d = KQUERY{REN, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "", "", "Third Bucket", false}
+   kq0e = KQUERY{INS, []string{"Prime Bucket"}, "", "", "", false}
+   kq0f = KQUERY{INS, []string{"Prime Bucket"}, "key", "", "", false}
+   kq10 = KQUERY{INS, []string{"Prime Bucket"}, "key", "value", "", false}
 )
 
 //Queries that should work according to the KVAL specification
@@ -44,6 +47,9 @@ var GoodQueryMap = map[string]string {
    "kq0b_delete_value": "DEL Prime Bucket >> Secondary Bucket >> Tertiary Bucket >>>> Key :: _ ",
    "kq0c_rename_key": "REN Prime Bucket >> Secondary Bucket >> Tertiary Bucket >>>> Key => New Key",
    "kq0d_rename_bucket": "REN Prime Bucket >> Secondary Bucket >> Tertiary Bucket => Third Bucket",   
+   "kq0e_one_bucket": "INS Prime Bucket",   
+   "kq0f_one_bucket_key": "INS Prime Bucket >>>> key",   
+   "kq10_one_bucker_key_value": "INS Prime Bucket >>>> key :: value",   
 }
 
 var GoodQueryExpected = map[string]KQUERY {
@@ -60,6 +66,9 @@ var GoodQueryExpected = map[string]KQUERY {
    "kq0b_delete_value": kq0b,
    "kq0c_rename_key": kq0c,
    "kq0d_rename_bucket": kq0d,
+   "kq0e_one_bucket": kq0e,   
+   "kq0f_one_bucket_key": kq0f,   
+   "kq10_one_bucker_key_value": kq10,
 }
 
 var BadQueryMap = map[string]string {
