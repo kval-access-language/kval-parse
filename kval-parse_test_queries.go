@@ -73,11 +73,11 @@ var GoodQueryExpected = map[string]KQUERY {
 
 var BadQueryMap = map[string]string {
    "badkq01_no_buckets": "INS",
-   "badkq02_ins_regex": "INS Prime Bucket >>> {PATT}",
-   "badkq03_ins_regex": "INS Prime Bucket >>> key :: {PATT}",
-   "badkq04_ins_regex": "INS Prime Bucket >>> {PATT} :: {PATT}",
-   "badkq05_get_val": "GET Prime Bucket >>> known :: unknown",              //if we know value, we don't need get
-   "badkq05_lis_val": "LIS Prime Bucket >>> known :: unknown",              //validate for yourself, for many reasons!   
+   "badkq02_ins_regex": "INS Prime Bucket >>>> {PATT}",
+   "badkq03_ins_regex": "INS Prime Bucket >>>> key :: {PATT}",
+   "badkq04_ins_regex": "INS Prime Bucket >>>> {PATT} :: {PATT}",
+   "badkq05_get_val": "GET Prime Bucket >>>> known :: unknown",              //if we know value, we don't need get
+   "badkq05_lis_val": "LIS Prime Bucket >>>> known :: unknown",              //validate for yourself, for many reasons!   
 }
 
 var BadQueryExpected = map[string]error {
