@@ -188,6 +188,10 @@ func validatequerystruct(kq KQUERY) (KQUERY, error) {
    if (kq.Function == GET || kq.Function == LIS) && (kq.Key == "_" && kq.Value == "") {
       return kq, fmt.Errorf("Unknown unknown: Cannot seek unknown key and value.")
    }
+   //rename capability
+   if kq.Function == REN && kq.Newname == "" {
+      return kq, fmt.Errorf("Rename: Missing Newname parameter.")      
+   }
    return kq, nil
 }
 

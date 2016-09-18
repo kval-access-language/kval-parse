@@ -84,6 +84,8 @@ var BadQueryMap = map[string]string {
    "badkq06_lis_val": "LIS Prime Bucket >>>> known :: unknown",              //validate for yourself, for many reasons!   
    "badkq07_get_unknown": "GET Prime Bucket >>>> _",
    "badkq08_lis_unknown": "LIS Prime Bucket >>>> _",
+   "badkq09_ren_bucket": "REN Prime Bucket => ",
+   "badkq0a_ren_key": "REN Prime Buckey >>>> Key => ",
 }
 
 var BadQueryExpected = map[string]error {
@@ -95,4 +97,6 @@ var BadQueryExpected = map[string]error {
    "badkq06_lis_val": fmt.Errorf("Known Value: No need to LIS a known value."),     
    "badkq07_get_unknown": fmt.Errorf("Unknown unknown: Cannot seek unknown key and value."),
    "badkq08_lis_unknown": fmt.Errorf("Unknown unknown: Cannot seek unknown key and value."),
+   "badkq09_ren_bucket": fmt.Errorf("Rename: Missing Newname parameter."),
+   "badkq0a_ren_key": fmt.Errorf("Rename: Missing Newname parameter."),
 }
