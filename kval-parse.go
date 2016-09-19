@@ -44,46 +44,50 @@ func Parse(query string) (KQUERY, error) {
 
    for tok != EOF {
       tok, lit = s.Scan()
-      if tok == LITERAL {
-         if PATTERN == true {
-            PATCACHE = PATCACHE + " " + lit
-         } else {
-            LITCACHE = LITCACHE + " " + lit
-         }
-      } else if tok == OPATT {
-         PATTERN = true
-      } else if tok == CPATT {
-         //validate patern
-         //Add it to Key or Value as appropriate
-         pattern, err := validatepattern(strings.TrimSpace(PATCACHE))
-         if err != nil {
-            return kq, err
-         }
-         kq, err = deconstruct(kq, LITERAL, pattern)
-         if err != nil {
-            return kq, err
-         }
-         kq.Regex = true
-         PATTERN = false
-      } else if tok != WS {
-         var err error
-         if LITCACHE != "" {
-            //Literal can be A bucket name, key name, or value name
-            kq, err = deconstruct(kq, LITERAL, LITCACHE)
+      if tok != ILLEGAL {
+         if tok == LITERAL {
+            if PATTERN == true {
+               PATCACHE = PATCACHE + " " + lit
+            } else {
+               LITCACHE = LITCACHE + " " + lit
+            }
+         } else if tok == OPATT {
+            PATTERN = true
+         } else if tok == CPATT {
+            //validate patern
+            //Add it to Key or Value as appropriate
+            pattern, err := validatepattern(strings.TrimSpace(PATCACHE))
             if err != nil {
                return kq, err
             }
-            LITCACHE = ""
-         }
-         if tok != EOF {
-            //Keyword dictates the type of operation
-            //Operator dictates where in the struct we need to place the value 
-            kq, err = deconstruct(kq, tok, lit)
+            kq, err = deconstruct(kq, LITERAL, pattern)
             if err != nil {
                return kq, err
             }
+            kq.Regex = true
+            PATTERN = false
+         } else if tok != WS {
+            var err error
+            if LITCACHE != "" {
+               //Literal can be A bucket name, key name, or value name
+               kq, err = deconstruct(kq, LITERAL, LITCACHE)
+               if err != nil {
+                  return kq, err
+               }
+               LITCACHE = ""
+            }
+            if tok != EOF {
+               //Keyword dictates the type of operation
+               //Operator dictates where in the struct we need to place the value 
+               kq, err = deconstruct(kq, tok, lit)
+               if err != nil {
+                  return kq, err
+               }
+            }
          }
-      } 
+      } else {
+         return kq, fmt.Errorf("Illegal token in query string '%s'.\n", lit)
+      }
    }
 
    //return kq, nil
@@ -152,6 +156,8 @@ func deconstruct(kq KQUERY, tok Token, lit string) (KQUERY, error) {
       kq.Newname = lit
       return kq, nil
    }
+
+   fmt.Println("%v %v \n", tok, lit)
 
    return kq, fmt.Errorf("Invalid query: Parsed without finding any new tokens.")
 }

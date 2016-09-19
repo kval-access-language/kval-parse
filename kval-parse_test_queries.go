@@ -32,6 +32,7 @@ var (
    kq0f = KQUERY{INS, []string{"Prime Bucket"}, "", "", "", false}
    kq10 = KQUERY{INS, []string{"Prime Bucket"}, "key", "", "", false}
    kq11 = KQUERY{INS, []string{"Prime Bucket"}, "key", "value", "", false}
+   kq12 = KQUERY{INS, []string{"Prime Bucket"}, "key", "hyphen-value", "", false}
 )
 
 //Queries that should work according to the KVAL specification
@@ -53,6 +54,7 @@ var GoodQueryMap = map[string]string {
    "kq0f_one_bucket": "INS Prime Bucket",   
    "kq10_one_bucket_key": "INS Prime Bucket >>>> key",   
    "kq11_one_bucket_key_value": "INS Prime Bucket >>>> key :: value",   
+   "kq12_one_bucket_hyphen_value": "INS Prime Bucket >>>> key :: hyphen-value",   
 }
 
 var GoodQueryExpected = map[string]KQUERY {
@@ -73,6 +75,7 @@ var GoodQueryExpected = map[string]KQUERY {
    "kq0f_one_bucket": kq0f,   
    "kq10_one_bucket_key": kq10,   
    "kq11_one_bucket_key_value": kq11,
+   "kq12_one_bucket_hyphen_value": kq12,
 }
 
 var BadQueryMap = map[string]string {

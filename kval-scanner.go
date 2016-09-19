@@ -160,7 +160,8 @@ func (s *Scanner) unread() { _ = s.r.UnreadRune() }
 func isWhitespace(ch rune) bool { return ch == ' ' || ch == '\t' || ch == '\n' }
 
 // isLetter returns true if the rune is a letter.
-func isLetter(ch rune) bool { return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') }
+//TODO: Need to expand this for a greater range of values... maybe NOT(the other classes?)
+func isLetter(ch rune) bool { return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch == '-' }
 
 func isOperator(ch rune) bool { return (ch == '>') || (ch == ':') || (ch == '=') } 
 
