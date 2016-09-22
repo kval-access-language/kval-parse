@@ -20,7 +20,7 @@ func TestParse(t *testing.T) {
 
       if !reflect.DeepEqual(kq, GoodQueryExpected[key]) {
          //TODO: is outputting the base64 encoded value helpful?
-         t.Errorf("FAIL: Good query parsed incorrectly: \n %s \n %v \n %v", query, kq, GoodQueryExpected[key])
+         t.Errorf("FAIL: Good query parsed incorrectly: \n %s \n Received: %v \n Expected: %v", query, kq, GoodQueryExpected[key])
       }
    }
 
