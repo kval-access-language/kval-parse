@@ -43,9 +43,31 @@ func TestBase64Input(t *testing.T) {
    }
 
    //we want to preserve the integrity of the values, so test those
-   if kq.Value != GET_base64value_res {
+   if kq.Value != GET_base64value_res_1 {
       //TODO: is outputting the base64 encoded value helpful?
-      t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", GET_base64value_res, kq.Value)
+      t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", GET_base64value_res_1, kq.Value)
+   } 
+
+   kq, err = Parse(INS_base64_img_2)
+   if err != nil {
+      t.Errorf("FAIL: Parse error \n %s \n %s", INS_base64_img_1, err)
+   }
+
+   //we want to preserve the integrity of the values, so test those
+   if kq.Value != GET_base64value_res_2 {
+      //TODO: is outputting the base64 encoded value helpful?
+      t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", GET_base64value_res_2, kq.Value)
+   } 
+
+   kq, err = Parse(INS_base64_img_3)
+   if err != nil {
+      t.Errorf("FAIL: Parse error \n %s \n %s", INS_base64_img_1, err)
+   }
+
+   //we want to preserve the integrity of the values, so test those
+   if kq.Value != GET_base64value_res_3 {
+      //TODO: is outputting the base64 encoded value helpful?
+      t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", GET_base64value_res_3, kq.Value)
    } 
 }
 
