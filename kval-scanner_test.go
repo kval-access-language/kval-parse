@@ -12,9 +12,10 @@ type scannerTest struct {
 
 var scannerTests = []scannerTest {
    {"", EOF},  
-   {"*", ILLEGAL}, 
+   {"*", LITERAL}, 
    {" ", WS}, 
    {"_", USCORE}, 
+   {"\x1F", ILLEGAL},
 }
 
 func TestScan(t *testing.T) {
@@ -22,14 +23,29 @@ func TestScan(t *testing.T) {
    for _, expected := range scannerTests {
       s := NewScanner(strings.NewReader(expected.scanvalue))
       var tok Token
+      var lit string 
       for tok != EOF {
-         tok, _ = s.Scan()
+         tok, lit = s.Scan()
          if (tok != EOF && expected.expected != EOF) && tok != expected.expected {
             //EOF returned each scan, so ignore if it's not what we're testing...      
-            t.Errorf("FAIL: Got %d when %d was expected.", tok, expected.expected)
+            t.Errorf("FAIL: Got %d '%s' when %d '%s' was expected.", tok, lit, expected.expected, expected.scanvalue)
          }
       }
    }
 }
 
-
+func TestValidLiterals(t *testing.T) {
+   //Test the full range of literals allowed in KVAL
+   var lits = []string{"āēīōūĀĒĪŌŪ", ">>>", "/)(*&^%$#@!>:!@#", "abc123"}
+   for _, s := range(lits) {
+      s := NewScanner(strings.NewReader(s))
+      var tok Token
+      var lit string
+      for tok != EOF {
+         tok, lit = s.Scan()
+         if tok == ILLEGAL {
+            t.Errorf("FAIL: Illegal token %d '%s' when expecting valid LITERAL value.", tok, lit)
+         } 
+      }
+   }
+}

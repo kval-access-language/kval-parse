@@ -3,11 +3,29 @@ package kvalparse
 //Customised from: https://github.com/benbjohnson/sql-parser/
 
 import (
+	"io"
+	"log"
 	"bufio"
 	"bytes"
-	"io"
 	"strings"
+	"strconv"
 )
+
+var min_unicoderune rune
+var max_unicoderune rune
+
+func init() {
+	var err error
+	//UNICODE: http://unicode-table.com/en/
+	min_unicoderune, _, _, err = strconv.UnquoteChar("\u00A1", 0)	//inverted exclamation mark
+	if err != nil {
+		log.Fatal("Cannot initialize scanner with min unicode value.")
+	}
+	max_unicoderune, _, _, err = strconv.UnquoteChar("\u1F991", 0) //extended symbols: squid
+	if err != nil {
+		log.Fatal("Cannot initialize scanner with max unicode value.")
+	}
+}
 
 // Scanner represents a lexical scanner.
 type Scanner struct {
@@ -161,7 +179,32 @@ func isWhitespace(ch rune) bool { return ch == ' ' || ch == '\t' || ch == '\n' }
 
 // isLetter returns true if the rune is a letter.
 //TODO: Need to expand this for a greater range of values... maybe NOT(the other classes?)
-func isLetter(ch rune) bool { return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch == '-' }
+//func isLetter(ch rune) bool { return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch == '-' }
+
+var letter_symbols = []rune{';','=','?','[','\\',']','^','`','|','~','@'}
+
+func isLetter(ch rune) bool { 
+	if (ch >= 'a' && ch <= 'z'){
+		return true 
+	}
+	if (ch >= 'A' && ch <= 'Z') {
+		return true
+	}
+	if ch >= '!' && ch <= '/' {
+		return true
+	}
+	for _, v := range(letter_symbols) {
+		if ch == v {
+			return true
+		}
+	}
+	//some rudimentary unicode handling... (need to improve)
+	//init code sets min and max unicode values
+	if ch >= min_unicoderune && ch <= max_unicoderune {
+		return true
+	}
+	return false
+}
 
 func isOperator(ch rune) bool { return (ch == '>') || (ch == ':') || (ch == '=') } 
 
