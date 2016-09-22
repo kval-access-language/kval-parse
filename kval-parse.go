@@ -47,11 +47,15 @@ func Parse(query string) (KQUERY, error) {
       if tok != ILLEGAL {
          if tok == LITERAL {
             if PATTERN == true {
-               PATCACHE = PATCACHE + " " + lit
+               PATCACHE = PATCACHE + lit
             } else {
-               LITCACHE = LITCACHE + " " + lit
+               LITCACHE = LITCACHE + lit
             }
-         } else if tok == OPATT {
+         } else if tok == WS {
+            LITCACHE = LITCACHE + lit    //repatriate whitespace from input        
+         } else if tok == USCORE {
+            LITCACHE = LITCACHE + lit
+         }else if tok == OPATT {
             PATTERN = true
          } else if tok == CPATT {
             //validate patern
@@ -69,7 +73,7 @@ func Parse(query string) (KQUERY, error) {
          } else if tok != WS {
             var err error
             if LITCACHE != "" {
-               //Literal can be A bucket name, key name, or value name
+               //LITERAL: can be A bucket name, key name, or value name
                kq, err = deconstruct(kq, LITERAL, LITCACHE)
                if err != nil {
                   return kq, err
@@ -157,9 +161,12 @@ func deconstruct(kq KQUERY, tok Token, lit string) (KQUERY, error) {
       return kq, nil
    }
 
-   fmt.Println("%v %v \n", tok, lit)
+   if tok == LITERAL && lit == "" {
+      //no error, just nothing else to do...
+      return kq, nil
+   }
 
-   return kq, fmt.Errorf("Invalid query: Parsed without finding any new tokens.")
+   return kq, fmt.Errorf("Invalid query: Parsed without finding any new tokens. y%vy x%vx", tok, lit)
 }
 
 //Attempt to compile the pattern to see if it is valid and return itself
