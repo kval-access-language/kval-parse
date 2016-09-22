@@ -3,8 +3,6 @@ package kvalparse
 import (
    "testing"
    "reflect"
-   //"fmt"
-   //"os"
 )
 
 //Exported Functions
@@ -21,6 +19,7 @@ func TestParse(t *testing.T) {
       }
 
       if !reflect.DeepEqual(kq, GoodQueryExpected[key]) {
+         //TODO: is outputting the base64 encoded value helpful?
          t.Errorf("FAIL: Good query parsed incorrectly: \n %s \n %v \n %v", query, kq, GoodQueryExpected[key])
       }
    }
@@ -39,14 +38,15 @@ func TestParse(t *testing.T) {
 }
 
 func TestBase64Input(t *testing.T) {
-   //_, err := Parse(INS_base64_img_1)
-   //if err != nil {
-   //   t.Errorf("FAIL: Parse error \n %s \n %s", INS_base64_img_1, err)
-   //}
+   kq, err := Parse(INS_base64_img_1)
+   if err != nil {
+      t.Errorf("FAIL: Parse error \n %s \n %s", INS_base64_img_1, err)
+   }
 
-   /*if !reflect.DeepEqual(kq, GoodQueryExpected[key]) {
-      t.Errorf("FAIL: Good query parsed incorrectly: \n %s \n %v \n %v", query, kq, GoodQueryExpected[key])
-   }*/
+   //we want to preserve the integrity of the values, so test those
+   if kq.Value != GET_base64value_res {
+      t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", GET_base64value_res, kq.Value)
+   } 
 }
 
 func TestExportDeconstruct(t *testing.T) {
