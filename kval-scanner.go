@@ -181,7 +181,7 @@ func isWhitespace(ch rune) bool { return ch == ' ' || ch == '\t' || ch == '\n' }
 //TODO: Need to expand this for a greater range of values... maybe NOT(the other classes?)
 //func isLetter(ch rune) bool { return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch == '-' }
 
-var letter_symbols = []rune{';','=','?','[','\\',']','^','`','|','~','@'}
+var ascii_letter_symbols = []rune{';','=','?','[','\\',']','^','`','|','~','@'}
 
 func isLetter(ch rune) bool { 
 	if (ch >= 'a' && ch <= 'z'){
@@ -193,7 +193,7 @@ func isLetter(ch rune) bool {
 	if ch >= '!' && ch <= '/' {
 		return true
 	}
-	for _, v := range(letter_symbols) {
+	for _, v := range(ascii_letter_symbols) {
 		if ch == v {
 			return true
 		}
