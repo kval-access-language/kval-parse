@@ -74,6 +74,38 @@ func (s *Scanner) scanWhitespace() (tok Token, lit string) {
 	return WS, buf.String()
 }
 
+func (s *Scanner) scanOperator() (tok Token, lit string) {
+	var buf bytes.Buffer
+	buf.WriteRune(s.read())
+
+	// Read every subsequent operator character into the buffer.
+	// Non-operator characters and EOF will cause the loop to exit.
+	for {
+		if ch := s.read(); ch == eof {
+			break
+		} else if !isOperator(ch) {
+			s.unread()
+			break
+		} else {
+			_, _ = buf.WriteRune(ch)
+		}
+	}
+
+	// If the string matches a custom operator then return that operator.
+	switch strings.ToUpper(buf.String()) {
+	case ">>>>":
+		return BUCKEY, buf.String()
+	case ">>":
+		return BUCBUC, buf.String()
+   case "=>":
+      return ASSIGN, buf.String()
+   case "::":
+      return KEYVAL, buf.String()
+	}
+
+   return LITERAL, buf.String()
+}
+
 // scanLiteral consumes the current rune and all contiguous literal runes.
 func (s *Scanner) scanLiteral() (tok Token, lit string) {
 	// Create a buffer and read the current character into it.
@@ -109,38 +141,6 @@ func (s *Scanner) scanLiteral() (tok Token, lit string) {
 
 	// Otherwise return as a regular identifier.
 	return LITERAL, buf.String()
-}
-
-func (s *Scanner) scanOperator() (tok Token, lit string) {
-	var buf bytes.Buffer
-	buf.WriteRune(s.read())
-
-	// Read every subsequent operator character into the buffer.
-	// Non-operator characters and EOF will cause the loop to exit.
-	for {
-		if ch := s.read(); ch == eof {
-			break
-		} else if !isOperator(ch) {
-			s.unread()
-			break
-		} else {
-			_, _ = buf.WriteRune(ch)
-		}
-	}
-
-	// If the string matches a custom operator then return that operator.
-	switch strings.ToUpper(buf.String()) {
-	case ">>>>":
-		return BUCKEY, buf.String()
-	case ">>":
-		return BUCBUC, buf.String()
-   case "=>":
-      return ASSIGN, buf.String()
-   case "::":
-      return KEYVAL, buf.String()
-	}
-
-   return LITERAL, buf.String()
 }
 
 // read reads the next rune from the bufferred reader.
