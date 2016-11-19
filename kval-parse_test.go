@@ -1,7 +1,6 @@
 package kvalparse
 
 import (
-   "log"
    "testing"
    "reflect"
 )
@@ -11,9 +10,8 @@ var ExportDeconstruct = deconstruct
 var ExportValidatePattern = validatepattern
 var ExportExtendSlice = extendslice
 
+//Test Exported function Parse for basic functionality...
 func TestParse(t *testing.T) {
-   log.Println("Testing exported Parse function.")
-
    for key, query := range GoodQueryMap {
       kq, err := Parse(query)
       if err != nil {
@@ -37,9 +35,8 @@ func TestParse(t *testing.T) {
    }
 }
 
+//Test that base64 encoding and decoding work as required...
 func TestBase64Input(t *testing.T) {
-   log.Println("Testing Base64 (BLOB) encoding and decoding.")
-
    kq, err := Parse(INS_base64_img_1)
    if err != nil {
       t.Errorf("FAIL: Parse error \n %s \n %s", INS_base64_img_1, err)
@@ -74,9 +71,9 @@ func TestBase64Input(t *testing.T) {
    } 
 }
 
+//Test that big unicode strings can be Parsed correctly...
+//TODO: Add some more exception characters to the test cases...
 func TestBigString(t *testing.T) {
-   log.Println("Testing Unicode Big Strings.")
-
    kq, err := Parse("INS bucket one >> bucket two >>>> bigstring :: " + bigstring_one)
    if err != nil {
       t.Errorf("FAIL: Parse error, unicode string incorrectly not allowed: \n %v\n", err)

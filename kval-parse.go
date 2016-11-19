@@ -9,6 +9,7 @@ import (
    "strings"
    "strconv"
    "unicode/utf8"
+   "github.com/kval-access-language/kval-scanner"
 )
 
 //maintain state
@@ -39,50 +40,50 @@ func Parse(query string) (KQUERY, error) {
    var PATTERN = false
    var PATCACHE string
 
-   s := NewScanner(strings.NewReader(query))
+   s := kvalscanner.NewScanner(strings.NewReader(query))
    
-   var tok Token
+   var tok kvalscanner.Token
    var lit string
 
-   for tok != EOF {
+   for tok != kvalscanner.EOF {
       tok, lit = s.Scan()
-      if tok != ILLEGAL {
-         if tok == LITERAL {
+      if tok != kvalscanner.ILLEGAL {
+         if tok == kvalscanner.LITERAL {
             if PATTERN == true {
                PATCACHE = PATCACHE + lit
             } else {
                LITCACHE = LITCACHE + lit
             }
-         } else if tok == WS {
+         } else if tok == kvalscanner.WS {
             LITCACHE = LITCACHE + lit    //repatriate whitespace from input        
-         } else if tok == USCORE {
+         } else if tok == kvalscanner.USCORE {
             LITCACHE = LITCACHE + lit
-         }else if tok == OPATT {
+         }else if tok == kvalscanner.OPATT {
             PATTERN = true
-         } else if tok == CPATT {
+         } else if tok == kvalscanner.CPATT {
             //validate patern
             //Add it to Key or Value as appropriate
             pattern, err := validatepattern(strings.TrimSpace(PATCACHE))
             if err != nil {
                return kq, err
             }
-            kq, err = deconstruct(kq, LITERAL, pattern)
+            kq, err = deconstruct(kq, kvalscanner.LITERAL, pattern)
             if err != nil {
                return kq, err
             }
             kq.Regex = true
             PATTERN = false
-         } else if tok != WS {
+         } else if tok != kvalscanner.WS {
             var err error
             if LITCACHE != "" {
-               //LITERAL: can be A bucket name, key name, or value name
-               kq, err = deconstruct(kq, LITERAL, LITCACHE)
+               //kvalscanner.LITERAL: can be A bucket name, key name, or value name
+               kq, err = deconstruct(kq, kvalscanner.LITERAL, LITCACHE)
                if err != nil {
                   return kq, err
                }
                LITCACHE = ""
             }
-            if tok != EOF {
+            if tok != kvalscanner.EOF {
                //Keyword dictates the type of operation
                //Operator dictates where in the struct we need to place the value 
                kq, err = deconstruct(kq, tok, lit)
@@ -95,9 +96,9 @@ func Parse(query string) (KQUERY, error) {
          r, s := utf8.DecodeRune([]byte(lit))
          if s != 0 {
             unicode := strconv.QuoteRuneToASCII(r)
-            return kq, fmt.Errorf("Illegal token in query string '%s', %s.\n", lit, unicode)
+            return kq, fmt.Errorf("ILLEGAL token in query string '%s', %s.\n", lit, unicode)
          } else {
-            return kq, fmt.Errorf("Illegal token in query string '%s'.\n", lit)
+            return kq, fmt.Errorf("ILLEGAL token in query string '%s'.\n", lit)
          }
       }
    }
@@ -106,13 +107,13 @@ func Parse(query string) (KQUERY, error) {
    return validatequerystruct(kq)   
 }
 
-func deconstruct(kq KQUERY, tok Token, lit string) (KQUERY, error) {
+func deconstruct(kq KQUERY, tok kvalscanner.Token, lit string) (KQUERY, error) {
 
    lit = strings.TrimSpace(lit)
 
    //seek function keyword first
    if keyword == true {
-      if KeywordMap[lit] == 0 {
+      if kvalscanner.KeywordMap[lit] == 0 {
          return kq, err_invalid_function
       } else {
          kq.Function = tok
@@ -123,13 +124,13 @@ func deconstruct(kq KQUERY, tok Token, lit string) (KQUERY, error) {
    }
 
    if bucket == true {
-      if tok == BUCKEY {
+      if tok == kvalscanner.BUCKEY {
          bucket = false
          key = true
-      } else if tok == BUCBUC {
+      } else if tok == kvalscanner.BUCBUC {
          //bucket to bucket relationship, do nothing
-      } else if tok == ASSIGN {
-         //looking to rename bucket 
+      } else if tok == kvalscanner.ASSIGN {
+         //looking to kvalscanner.REName bucket 
          bucket = false
          newname = true
       } else {
@@ -150,13 +151,13 @@ func deconstruct(kq KQUERY, tok Token, lit string) (KQUERY, error) {
       return kq, nil
    }
 
-   if tok == KEYVAL {
+   if tok == kvalscanner.KEYVAL {
       key = false
       value = true
       return kq, nil
    }
 
-   if tok == ASSIGN {
+   if tok == kvalscanner.ASSIGN {
       bucket = false
       key = false
       value = false      
@@ -169,7 +170,7 @@ func deconstruct(kq KQUERY, tok Token, lit string) (KQUERY, error) {
       return kq, nil
    }
 
-   if tok == LITERAL && lit == "" {
+   if tok == kvalscanner.LITERAL && lit == "" {
       //no error, just nothing else to do...
       return kq, nil
    }
@@ -189,29 +190,30 @@ func validatepattern(pattern string) (string, error) {
 func validatequerystruct(kq KQUERY) (KQUERY, error) {
    //check for buckets
    if len(kq.Buckets) < 1 {
-      return kq, fmt.Errorf("Zero buckets: No buckets specified in input query.")
+      return kq, err_zero_buckets
    }   
-   if kq.Function == INS && kq.Regex == true {
-      return kq, fmt.Errorf("Invalid Pattern use: Can't have regex on insert.")
+   if kq.Function == kvalscanner.INS && kq.Regex == true {
+      return kq, err_ins_regex
    }
-   if (kq.Function == LIS || kq.Function == GET) && kq.Regex != true {
+   if (kq.Function == kvalscanner.LIS || kq.Function == kvalscanner.GET) && kq.Regex != true {
       if kq.Key != "" && kq.Key != "_" {
+         //trying to use REGEX for a key that is known...
          if kq.Value != "" {
-            if kq.Function == GET {
-               return kq, fmt.Errorf("Known Value: No need to GET a known value.")  
+            if kq.Function == kvalscanner.GET {
+               return kq, err_key_get_regex  
             } else {
-               return kq, fmt.Errorf("Known Value: No need to LIS a known value.")  
+               return kq, err_key_lis_regex
             }
          }
       }    
    }
-   //unless we want this to be a synonym for getting all values from a bucket...
-   if (kq.Function == GET || kq.Function == LIS) && (kq.Key == "_" && kq.Value == "") {
-      return kq, fmt.Errorf("Unknown unknown: Cannot seek unknown key and value.")
+   //unless we want this to be a synonym for kvalscanner.GETting all values from a bucket...
+   if (kq.Function == kvalscanner.GET || kq.Function == kvalscanner.LIS) && (kq.Key == "_" && kq.Value == "") {
+      return kq, err_unk_unk
    }
-   //rename capability
-   if kq.Function == REN && kq.Newname == "" {
-      return kq, fmt.Errorf("Rename: Missing Newname parameter.")      
+   //kvalscanner.REName capability
+   if kq.Function == kvalscanner.REN && kq.Newname == "" {
+      return kq, err_no_name_rename   
    }
    return kq, nil
 }
