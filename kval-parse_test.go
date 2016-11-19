@@ -1,6 +1,7 @@
 package kvalparse
 
 import (
+   "log"
    "testing"
    "reflect"
 )
@@ -11,13 +12,13 @@ var ExportValidatePattern = validatepattern
 var ExportExtendSlice = extendslice
 
 func TestParse(t *testing.T) {
-   //Test exported function Parse() using good queries...
+   log.Println("Testing exported Parse function.")
+
    for key, query := range GoodQueryMap {
       kq, err := Parse(query)
       if err != nil {
          t.Errorf("FAIL: Parse error \n %s \n %s", query, err)
       }
-
       if !reflect.DeepEqual(kq, GoodQueryExpected[key]) {
          t.Errorf("FAIL: Good query parsed incorrectly: \n %s \n Received: %v \n Expected: %v", query, kq, GoodQueryExpected[key])
       }
@@ -37,6 +38,8 @@ func TestParse(t *testing.T) {
 }
 
 func TestBase64Input(t *testing.T) {
+   log.Println("Testing Base64 (BLOB) encoding and decoding.")
+
    kq, err := Parse(INS_base64_img_1)
    if err != nil {
       t.Errorf("FAIL: Parse error \n %s \n %s", INS_base64_img_1, err)
@@ -69,6 +72,24 @@ func TestBase64Input(t *testing.T) {
       //TODO: is outputting the base64 encoded value helpful?
       t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", GET_base64value_res_3, kq.Value)
    } 
+}
+
+func TestBigString(t *testing.T) {
+   log.Println("Testing Unicode Big Strings.")
+
+   kq, err := Parse("INS bucket one >> bucket two >>>> bigstring :: " + bigstring_one)
+   if err != nil {
+      t.Errorf("FAIL: Parse error, unicode string incorrectly not allowed: \n %v\n", err)
+   } else if kq.Value != bigstring_one {
+      t.Errorf("FAIL: Parse error, bigstring warped on input.\n", err)
+   }
+
+   kq, err = Parse("INS bucket one >> bucket two >>>> bigstring :: " + bigstring_two)
+   if err != nil {
+      t.Errorf("FAIL: Parse error, unicode string incorrectly not allowed: \n %v\n", err)
+   } else if kq.Value != bigstring_two {
+      t.Errorf("FAIL: Parse error, bigstring warped on input.\n", err)
+   }
 }
 
 func TestExportDeconstruct(t *testing.T) {

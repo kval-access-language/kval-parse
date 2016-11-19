@@ -7,6 +7,8 @@ import (
    "fmt"
    "regexp"
    "strings"
+   "strconv"
+   "unicode/utf8"
 )
 
 //maintain state
@@ -90,7 +92,13 @@ func Parse(query string) (KQUERY, error) {
             }
          }
       } else {
-         return kq, fmt.Errorf("Illegal token in query string '%s'.\n", lit)
+         r, s := utf8.DecodeRune([]byte(lit))
+         if s != 0 {
+            unicode := strconv.QuoteRuneToASCII(r)
+            return kq, fmt.Errorf("Illegal token in query string '%s', %s.\n", lit, unicode)
+         } else {
+            return kq, fmt.Errorf("Illegal token in query string '%s'.\n", lit)
+         }
       }
    }
 

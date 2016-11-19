@@ -1,6 +1,7 @@
 package kvalparse
 
 import (
+   "log"
    "strings"
    "testing"
 )
@@ -19,7 +20,9 @@ var scannerTests = []scannerTest {
 }
 
 func TestScan(t *testing.T) {
-   //Test simple scan results to being with... more complex scans later.
+
+   log.Println("Testing basic tokens are output as expected in Scanner.")
+
    for _, expected := range scannerTests {
       s := NewScanner(strings.NewReader(expected.scanvalue))
       var tok Token
@@ -35,8 +38,11 @@ func TestScan(t *testing.T) {
 }
 
 func TestValidLiterals(t *testing.T) {
+
+   log.Println("Testing that we can parse valid literals in strings.")
+
    //Test the full range of literals allowed in KVAL
-   var lits = []string{"āēīōūĀĒĪŌŪ", ">>>", "/)(*&^%$#@!>:!@#", "abc123"}
+   var lits = []string{"āēīōūĀĒĪŌŪ", ">>>", "/)(*&^%$#@!>:!@#", "abc123", "子：？"}
    for _, s := range(lits) {
       s := NewScanner(strings.NewReader(s))
       var tok Token
@@ -44,7 +50,7 @@ func TestValidLiterals(t *testing.T) {
       for tok != EOF {
          tok, lit = s.Scan()
          if tok == ILLEGAL {
-            t.Errorf("FAIL: Illegal token %d '%s' when expecting valid LITERAL value.", tok, lit)
+            t.Errorf("FAIL: Illegal token '%d' '%s' when expecting valid LITERAL value.", tok, lit)
          } 
       }
    }

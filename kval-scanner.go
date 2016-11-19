@@ -21,7 +21,7 @@ func init() {
 	if err != nil {
 		log.Fatal("Cannot initialize scanner with min unicode value.")
 	}
-	max_unicoderune, _, _, err = strconv.UnquoteChar("\u1F991", 0) //extended symbols: squid
+	max_unicoderune, _, _, err = strconv.UnquoteChar("\uFF1F00", 0) //extended symbols: squid
 	if err != nil {
 		log.Fatal("Cannot initialize scanner with max unicode value.")
 	}
@@ -184,6 +184,7 @@ func isWhitespace(ch rune) bool { return ch == ' ' || ch == '\t' || ch == '\n' }
 var ascii_letter_symbols = []rune{';','=','?','[','\\',']','^','`','|','~','@'}
 
 func isLetter(ch rune) bool { 
+
 	if (ch >= 'a' && ch <= 'z'){
 		return true 
 	}
