@@ -222,6 +222,10 @@ func validatequerystruct(kq KQUERY) (KQUERY, error) {
    if kq.Function == kvalscanner.REN && kq.Newname == "" {
       return kq, err_no_name_rename   
    }
+   //searching for a known
+   if kq.Function == kvalscanner.GET && (kq.Key != "_" && kq.Key != "") && kq.Value != "" {
+      return kq, err_key_get_regex
+   }
    return kq, nil
 }
 
