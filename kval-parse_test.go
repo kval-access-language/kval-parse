@@ -89,6 +89,24 @@ func TestBigString(t *testing.T) {
    }
 }
 
+func TestExceptionQueries(t *testing.T) {
+   var qstring = "GET ABC >> DEF >>>> GHI :: JKL"
+   kq, err := Parse("INS bucket one >> bucket two >>>> bigstring :: " + qstring)
+   if err != nil {
+      t.Errorf("FAIL: Parse error, string not allowed: \n %v\n", err)
+   } else if kq.Value != qstring {
+      t.Errorf("FAIL: Parse error, example query string warped on input:\nReceived:%v\nExpected: %v\n", kq.Value, qstring)
+   }
+
+   qstring = ">> DEF >>>> GHI :: JKL"
+   kq, err = Parse("INS bucket one >> bucket two >>>> bigstring :: " + qstring)
+   if err != nil {
+      t.Errorf("FAIL: Parse error, string not allowed: \n %v\n", err)
+   } else if kq.Value != qstring {
+      t.Errorf("FAIL: Parse error, example query string warped on input:\nReceived:%v\nExpected: %v\n", kq.Value, qstring)
+   }
+}
+
 func TestExportDeconstruct(t *testing.T) {
    //Test non-exported function deconstruct() here.
 }

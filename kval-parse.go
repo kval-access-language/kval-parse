@@ -111,50 +111,46 @@ func deconstruct(kq KQUERY, tok kvalscanner.Token, lit string) (KQUERY, error) {
 
    lit = strings.TrimSpace(lit)
 
-   //seek function keyword first
-   if keyword == true {
-      if kvalscanner.KeywordMap[lit] == 0 {
-         return kq, err_invalid_function
-      } else {
-         kq.Function = tok
-         keyword = false
-         bucket = true
+   if !value {
+      //seek function keyword first
+      if keyword == true {
+         if kvalscanner.KeywordMap[lit] == 0 {
+            return kq, err_invalid_function
+         } else {
+            kq.Function = tok
+            keyword = false
+            bucket = true
+            return kq, nil
+         }
+      }
+
+      if bucket == true {
+         if tok == kvalscanner.BUCKEY {
+            bucket = false
+            key = true
+         } else if tok == kvalscanner.BUCBUC {
+            //bucket to bucket relationship, do nothing
+         } else if tok == kvalscanner.ASSIGN {
+            //looking to rename bucket 
+            bucket = false
+            newname = true
+         } else {
+            kq.Buckets = extendslice(kq.Buckets, lit)
+         }
          return kq, nil
       }
-   }
 
-   if bucket == true {
-      if tok == kvalscanner.BUCKEY {
-         bucket = false
-         key = true
-      } else if tok == kvalscanner.BUCBUC {
-         //bucket to bucket relationship, do nothing
-      } else if tok == kvalscanner.ASSIGN {
-         //looking to kvalscanner.REName bucket 
-         bucket = false
-         newname = true
-      } else {
-         kq.Buckets = extendslice(kq.Buckets, lit)
+      if key == true {
+         kq.Key = lit
+         key = false       //key added, can only be one
+         return kq, nil
       }
-      return kq, nil
-   }
 
-   if key == true {
-      kq.Key = lit
-      key = false       //key added, can only be one
-      return kq, nil
-   }
-
-   if value == true {
-      kq.Value = lit
-      value = false        //value added, can only be one
-      return kq, nil
-   }
-
-   if tok == kvalscanner.KEYVAL {
-      key = false
-      value = true
-      return kq, nil
+      if tok == kvalscanner.KEYVAL {
+         key = false
+         value = true
+         return kq, nil
+      }
    }
 
    if tok == kvalscanner.ASSIGN {
@@ -175,7 +171,18 @@ func deconstruct(kq KQUERY, tok kvalscanner.Token, lit string) (KQUERY, error) {
       return kq, nil
    }
 
+   //once value flag is set, treat it *all* as a value until EOM...
+   if value == true {
+      if kq.Value == "" {
+         kq.Value = lit
+      } else {
+         kq.Value = kq.Value + " " + lit
+      }
+      return kq, nil
+   }
+
    return kq, errors.Wrapf(err_parsed_no_new_tokens, "'%v', '%v'", tok, lit)
+   //return kq, nil
 }
 
 //Attempt to compile the pattern to see if it is valid and return itself
@@ -207,11 +214,11 @@ func validatequerystruct(kq KQUERY) (KQUERY, error) {
          }
       }    
    }
-   //unless we want this to be a synonym for kvalscanner.GETting all values from a bucket...
+   //unless we want this to be a synonym for getting all values from a bucket...
    if (kq.Function == kvalscanner.GET || kq.Function == kvalscanner.LIS) && (kq.Key == "_" && kq.Value == "") {
       return kq, err_unk_unk
    }
-   //kvalscanner.REName capability
+   //rename capability
    if kq.Function == kvalscanner.REN && kq.Newname == "" {
       return kq, err_no_name_rename   
    }
