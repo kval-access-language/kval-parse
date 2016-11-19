@@ -105,7 +105,7 @@ func deconstruct(kq KQUERY, tok Token, lit string) (KQUERY, error) {
    //seek function keyword first
    if keyword == true {
       if KeywordMap[lit] == 0 {
-         return kq, fmt.Errorf("Invalid function: %s", lit)
+         return kq, err_invalid_function
       } else {
          kq.Function = tok
          keyword = false
