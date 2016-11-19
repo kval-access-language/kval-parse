@@ -4,11 +4,11 @@ package kvalparse
 //https://github.com/fatih/hcl/blob/8f83adfc08e6d7162ef328a06cf00ee5fb865f30/scanner/scanner.go
 
 import (
-   "fmt"
    "regexp"
    "strings"
    "strconv"
    "unicode/utf8"
+   "github.com/pkg/errors"
    "github.com/kval-access-language/kval-scanner"
 )
 
@@ -96,9 +96,9 @@ func Parse(query string) (KQUERY, error) {
          r, s := utf8.DecodeRune([]byte(lit))
          if s != 0 {
             unicode := strconv.QuoteRuneToASCII(r)
-            return kq, fmt.Errorf("ILLEGAL token in query string '%s', %s.\n", lit, unicode)
+            return kq, errors.Wrapf(err_illegal_token, "'%s', %s.\n", lit, unicode)
          } else {
-            return kq, fmt.Errorf("ILLEGAL token in query string '%s'.\n", lit)
+            return kq, errors.Wrapf(err_illegal_token, "'%s'.\n", lit)
          }
       }
    }
@@ -175,14 +175,14 @@ func deconstruct(kq KQUERY, tok kvalscanner.Token, lit string) (KQUERY, error) {
       return kq, nil
    }
 
-   return kq, fmt.Errorf("Invalid query: Parsed without finding any new tokens. y%vy x%vx", tok, lit)
+   return kq, errors.Wrapf(err_parsed_no_new_tokens, "'%v', '%v'", tok, lit)
 }
 
 //Attempt to compile the pattern to see if it is valid and return itself
 func validatepattern(pattern string) (string, error) {
    _, err := regexp.Compile(pattern)      //n.b. CompilePOSIX() too
    if err != nil {
-      err = fmt.Errorf("Invalid regex: Cannot compile regular expression.")
+      err = err_compile_regex
    }
    return pattern, err
 }
