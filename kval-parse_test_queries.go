@@ -33,8 +33,8 @@ var (
    kq10 = KQUERY{kvalscanner.INS, []string{"Prime Bucket"}, "key", "", "", false}
    kq11 = KQUERY{kvalscanner.INS, []string{"Prime Bucket"}, "key", "value", "", false}
    kq12 = KQUERY{kvalscanner.INS, []string{"Prime Bucket"}, "key", "hyphen-value", "", false}
-   kq13 = KQUERY{kvalscanner.GET, []string{"Prime Bucket"}, "_", "PATT WITH SPACE", "", false}
-   kq14 = KQUERY{kvalscanner.GET, []string{"Prime Bucket"}, "PATT WITH SPACE", "", "", false}
+   kq13 = KQUERY{kvalscanner.GET, []string{"Prime Bucket"}, "_", "PATT WITH THREE SPACES", "", true}
+   kq14 = KQUERY{kvalscanner.GET, []string{"Prime Bucket"}, "PATT WITH THREE SPACES", "", "", true}
    kq15 = KQUERY{kvalscanner.INS, []string{"Prime Bucket"}, "key", "value with space", "", false}
 )
 
@@ -58,8 +58,8 @@ var GoodQueryMap = map[string]string {
    "kq10_one_bucket_key": "INS Prime Bucket >>>> key",   
    "kq11_one_bucket_key_value": "INS Prime Bucket >>>> key :: value",   
    "kq12_one_bucket_hyphen_value": "INS Prime Bucket >>>> key :: hyphen-value",   
-   "kq13_regex_spaces_value": "GET Prime Bucket >>>> _ :: {PATT WITH SPACE}",   
-   "kq14_regex_spaces_key": "GET Prime Bucket >>>> {PATT WITH SPACE}",   
+   "kq13_regex_spaces_value": "GET Prime Bucket >>>> _ :: {PATT WITH THREE SPACES}",   
+   "kq14_regex_spaces_key": "GET Prime Bucket >>>> {PATT WITH THREE SPACES}",   
    "kq15_value_spaces": "INS Prime Bucket >>>> key :: value with space",   
 }
 

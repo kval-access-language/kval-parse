@@ -50,7 +50,7 @@ func Parse(query string) (KQUERY, error) {
       if tok != kvalscanner.ILLEGAL {
          if tok == kvalscanner.LITERAL {
             if PATTERN == true {
-               PATCACHE = PATCACHE + lit
+               PATCACHE = PATCACHE + " " + lit     //patt trimmed below
             } else {
                LITCACHE = LITCACHE + lit
             }
