@@ -1,5 +1,6 @@
 # KVAL-Parse
 
+[![Build Status](https://travis-ci.org/kval-access-language/kval-parse.svg?branch=master)](https://travis-ci.org/kval-access-language/kval-parse)
 [![GoDoc](https://godoc.org/github.com/kval-access-language/kval-parse?status.svg)](https://godoc.org/github.com/kval-access-language/kval-parse)
 [![Go Report Card](https://goreportcard.com/badge/github.com/kval-access-language/kval-parse)](https://goreportcard.com/report/github.com/kval-access-language/kval-parse)
 
