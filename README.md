@@ -1,6 +1,7 @@
 # KVAL-Parse
 
 [![GoDoc](https://godoc.org/github.com/kval-access-language/kval-parse?status.svg)](https://godoc.org/github.com/kval-access-language/kval-parse)
+[![Go Report Card](https://goreportcard.com/badge/github.com/kval-access-language/kval-parse)](https://goreportcard.com/report/github.com/kval-access-language/kval-parse)
 
 Parser written in Golang for a simple key value access language. 
 
