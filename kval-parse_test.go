@@ -37,9 +37,9 @@ func TestParse(t *testing.T) {
 
 //Test that base64 encoding and decoding work as required...
 func TestBase64Input(t *testing.T) {
-	kq, err := Parse(INS_base64_img_1)
+	kq, err := Parse(insBase64Img1)
 	if err != nil {
-		t.Errorf("FAIL: Parse error \n %s \n %s", INS_base64_img_1, err)
+		t.Errorf("FAIL: Parse error \n %s \n %s", insBase64Img1, err)
 	}
 
 	//we want to preserve the integrity of the values, so test those
@@ -48,9 +48,9 @@ func TestBase64Input(t *testing.T) {
 		t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", GET_base64value_res_1, kq.Value)
 	}
 
-	kq, err = Parse(INS_base64_img_2)
+	kq, err = Parse(insBase64Img2)
 	if err != nil {
-		t.Errorf("FAIL: Parse error \n %s \n %s", INS_base64_img_1, err)
+		t.Errorf("FAIL: Parse error \n %s \n %s", insBase64Img1, err)
 	}
 
 	//we want to preserve the integrity of the values, so test those
@@ -59,9 +59,9 @@ func TestBase64Input(t *testing.T) {
 		t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", GET_base64value_res_2, kq.Value)
 	}
 
-	kq, err = Parse(INS_base64_img_3)
+	kq, err = Parse(insBase64Img3)
 	if err != nil {
-		t.Errorf("FAIL: Parse error \n %s \n %s", INS_base64_img_1, err)
+		t.Errorf("FAIL: Parse error \n %s \n %s", insBase64Img1, err)
 	}
 
 	//we want to preserve the integrity of the values, so test those
