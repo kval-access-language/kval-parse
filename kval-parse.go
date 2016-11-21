@@ -30,9 +30,9 @@ func setupstate() {
 	newname = false
 }
 
-// Parse: Primary function that any binding should care about. A valid KVAL (Key Value
-// Access Language) query will result in a KQuery struct that can be manipulated
-// and passed around the binding's code more easily.
+// Parse is the primary function that any binding should care about. A valid KVAL 
+// (Key Value Access Language) query will result in a KQuery struct that can be 
+// manipulated and passed around the binding's code more easily.
 func Parse(query string) (KQuery, error) {
 
 	setupstate()
