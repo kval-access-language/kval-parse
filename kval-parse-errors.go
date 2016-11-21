@@ -11,4 +11,4 @@ var errUnknownUnknown = errors.New("Unknown unknown: Cannot seek unknown key and
 var errNoNameRename = errors.New("Rename: Missing newname parameter")
 var errCompileRegex = errors.New("Invalid regex: Cannot compile regular expression")
 var errParsedNoNewTokens = errors.New("Invalid query: Parsed without finding any new tokens")
-var err_illegal_token = errors.New("Illegal token in query string")
+var errIllegalToken = errors.New("Illegal token in query string")

@@ -14,28 +14,28 @@ type KQUERY struct {
 */
 
 var (
-	kq01 = KQUERY{kvalscanner.INS, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "Value", "", false}
-	kq02 = KQUERY{kvalscanner.INS, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "", "", "", false}
-	kq03 = KQUERY{kvalscanner.GET, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "", "", "", false}
-	kq04 = KQUERY{kvalscanner.GET, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "", "", false}
-	kq05 = KQUERY{kvalscanner.GET, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "PAT", "", "", true}
-	kq06 = KQUERY{kvalscanner.GET, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "_", "Value", "", false}
-	kq07 = KQUERY{kvalscanner.GET, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "_", "PAT", "", true}
-	kq08 = KQUERY{kvalscanner.LIS, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "", "", false}
-	kq09 = KQUERY{kvalscanner.LIS, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "", "", "", false}
-	kq0a = KQUERY{kvalscanner.DEL, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "", "", "", false}
-	kq0b = KQUERY{kvalscanner.DEL, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "", "", false}
-	kq0c = KQUERY{kvalscanner.DEL, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "_", "", false}
-	kq0d = KQUERY{kvalscanner.REN, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "", "New Key", false}
-	kq0e = KQUERY{kvalscanner.REN, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "", "", "Third Bucket", false}
+	kq01 = KQuery{kvalscanner.INS, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "Value", "", false}
+	kq02 = KQuery{kvalscanner.INS, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "", "", "", false}
+	kq03 = KQuery{kvalscanner.GET, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "", "", "", false}
+	kq04 = KQuery{kvalscanner.GET, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "", "", false}
+	kq05 = KQuery{kvalscanner.GET, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "PAT", "", "", true}
+	kq06 = KQuery{kvalscanner.GET, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "_", "Value", "", false}
+	kq07 = KQuery{kvalscanner.GET, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "_", "PAT", "", true}
+	kq08 = KQuery{kvalscanner.LIS, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "", "", false}
+	kq09 = KQuery{kvalscanner.LIS, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "", "", "", false}
+	kq0a = KQuery{kvalscanner.DEL, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "", "", "", false}
+	kq0b = KQuery{kvalscanner.DEL, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "", "", false}
+	kq0c = KQuery{kvalscanner.DEL, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "_", "", false}
+	kq0d = KQuery{kvalscanner.REN, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "Key", "", "New Key", false}
+	kq0e = KQuery{kvalscanner.REN, []string{"Prime Bucket", "Secondary Bucket", "Tertiary Bucket"}, "", "", "Third Bucket", false}
 	//non-reference-queries
-	kq0f = KQUERY{kvalscanner.INS, []string{"Prime Bucket"}, "", "", "", false}
-	kq10 = KQUERY{kvalscanner.INS, []string{"Prime Bucket"}, "key", "", "", false}
-	kq11 = KQUERY{kvalscanner.INS, []string{"Prime Bucket"}, "key", "value", "", false}
-	kq12 = KQUERY{kvalscanner.INS, []string{"Prime Bucket"}, "key", "hyphen-value", "", false}
-	kq13 = KQUERY{kvalscanner.GET, []string{"Prime Bucket"}, "_", "PATT WITH THREE SPACES", "", true}
-	kq14 = KQUERY{kvalscanner.GET, []string{"Prime Bucket"}, "PATT WITH THREE SPACES", "", "", true}
-	kq15 = KQUERY{kvalscanner.INS, []string{"Prime Bucket"}, "key", "value with space", "", false}
+	kq0f = KQuery{kvalscanner.INS, []string{"Prime Bucket"}, "", "", "", false}
+	kq10 = KQuery{kvalscanner.INS, []string{"Prime Bucket"}, "key", "", "", false}
+	kq11 = KQuery{kvalscanner.INS, []string{"Prime Bucket"}, "key", "value", "", false}
+	kq12 = KQuery{kvalscanner.INS, []string{"Prime Bucket"}, "key", "hyphen-value", "", false}
+	kq13 = KQuery{kvalscanner.GET, []string{"Prime Bucket"}, "_", "PATT WITH THREE SPACES", "", true}
+	kq14 = KQuery{kvalscanner.GET, []string{"Prime Bucket"}, "PATT WITH THREE SPACES", "", "", true}
+	kq15 = KQuery{kvalscanner.INS, []string{"Prime Bucket"}, "key", "value with space", "", false}
 )
 
 //Queries that should work according to the KVAL specification
@@ -63,7 +63,7 @@ var GoodQueryMap = map[string]string{
 	"kq15_value_spaces":               "INS Prime Bucket >>>> key :: value with space",
 }
 
-var GoodQueryExpected = map[string]KQUERY{
+var goodQueryExpected = map[string]KQuery{
 	"kq01_insert_value":               kq01,
 	"kq02_insert_value":               kq02,
 	"kq03_get_bucket_contents":        kq03,
@@ -87,7 +87,7 @@ var GoodQueryExpected = map[string]KQUERY{
 	"kq15_value_spaces":               kq15,
 }
 
-var BadQueryMap = map[string]string{
+var badQueryMap = map[string]string{
 	"badkq01_no_buckets":  "INS",
 	"badkq02_ins_regex":   "INS Prime Bucket >>>> {PATT}",
 	"badkq03_ins_regex":   "INS Prime Bucket >>>> key :: {PATT}",
@@ -100,7 +100,7 @@ var BadQueryMap = map[string]string{
 	"badkq0a_ren_key":     "REN Prime Buckey >>>> Key => ",
 }
 
-var BadQueryExpected = map[string]error{
+var badQueryExpected = map[string]error{
 	"badkq01_no_buckets":  errZeroBuckets,
 	"badkq02_ins_regex":   errInsertRegex,
 	"badkq03_ins_regex":   errInsertRegex,

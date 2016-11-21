@@ -30,11 +30,11 @@ func setupstate() {
 	newname = false
 }
 
-func Parse(query string) (KQUERY, error) {
+func Parse(query string) (KQuery, error) {
 
 	setupstate()
 
-	var kq KQUERY
+	var kq KQuery
 	var LITCACHE string
 
 	var PATTERN = false
@@ -96,9 +96,9 @@ func Parse(query string) (KQUERY, error) {
 			r, s := utf8.DecodeRune([]byte(lit))
 			if s != 0 {
 				unicode := strconv.QuoteRuneToASCII(r)
-				return kq, errors.Wrapf(err_illegal_token, "'%s', %s.\n", lit, unicode)
+				return kq, errors.Wrapf(errIllegalToken, "'%s', %s.\n", lit, unicode)
 			} else {
-				return kq, errors.Wrapf(err_illegal_token, "'%s'.\n", lit)
+				return kq, errors.Wrapf(errIllegalToken, "'%s'.\n", lit)
 			}
 		}
 	}
@@ -107,7 +107,7 @@ func Parse(query string) (KQUERY, error) {
 	return validatequerystruct(kq)
 }
 
-func deconstruct(kq KQUERY, tok kvalscanner.Token, lit string) (KQUERY, error) {
+func deconstruct(kq KQuery, tok kvalscanner.Token, lit string) (KQuery, error) {
 
 	lit = strings.TrimSpace(lit)
 
@@ -194,7 +194,7 @@ func validatepattern(pattern string) (string, error) {
 	return pattern, err
 }
 
-func validatequerystruct(kq KQUERY) (KQUERY, error) {
+func validatequerystruct(kq KQuery) (KQuery, error) {
 	//check for buckets
 	if len(kq.Buckets) < 1 {
 		return kq, errZeroBuckets

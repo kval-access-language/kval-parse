@@ -2,7 +2,7 @@ package kvalparse
 
 import "github.com/kval-access-language/kval-scanner"
 
-type KQUERY struct {
+type KQuery struct {
 	Function kvalscanner.Token
 	Buckets  []string
 	Key      string

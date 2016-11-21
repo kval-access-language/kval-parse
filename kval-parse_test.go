@@ -17,20 +17,20 @@ func TestParse(t *testing.T) {
 		if err != nil {
 			t.Errorf("FAIL: Parse error \n %s \n %s", query, err)
 		}
-		if !reflect.DeepEqual(kq, GoodQueryExpected[key]) {
-			t.Errorf("FAIL: Good query parsed incorrectly: \n %s \n Received: %v \n Expected: %v", query, kq, GoodQueryExpected[key])
+		if !reflect.DeepEqual(kq, goodQueryExpected[key]) {
+			t.Errorf("FAIL: Good query parsed incorrectly: \n %s \n Received: %v \n Expected: %v", query, kq, goodQueryExpected[key])
 		}
 	}
 
 	//Test exported function Parse() using bad queries... we're *want* errors
-	for key, query := range BadQueryMap {
+	for key, query := range badQueryMap {
 		kq, err := Parse(query)
 		if err != nil {
-			if !reflect.DeepEqual(err, BadQueryExpected[key]) {
-				t.Errorf("FAIL: Bad query parsed incorrectly: \n %s \n %v \n %v \n %v", query, kq, err, BadQueryExpected[key])
+			if !reflect.DeepEqual(err, badQueryExpected[key]) {
+				t.Errorf("FAIL: Bad query parsed incorrectly: \n %s \n %v \n %v \n %v", query, kq, err, badQueryExpected[key])
 			}
 		} else if err == nil {
-			t.Errorf("FAIL: Expecting error for query: \n %s \n %v", query, BadQueryExpected[key])
+			t.Errorf("FAIL: Expecting error for query: \n %s \n %v", query, badQueryExpected[key])
 		}
 	}
 }
@@ -74,17 +74,17 @@ func TestBase64Input(t *testing.T) {
 //Test that big unicode strings can be Parsed correctly...
 //TODO: Add some more exception characters to the test cases...
 func TestBigString(t *testing.T) {
-	kq, err := Parse("INS bucket one >> bucket two >>>> bigstring :: " + bigstring_one)
+	kq, err := Parse("INS bucket one >> bucket two >>>> bigstring :: " + bigStringOne)
 	if err != nil {
 		t.Errorf("FAIL: Parse error, unicode string incorrectly not allowed: \n %v\n", err)
-	} else if kq.Value != bigstring_one {
+	} else if kq.Value != bigStringOne {
 		t.Errorf("FAIL: Parse error, bigstring warped on input.\n", err)
 	}
 
-	kq, err = Parse("INS bucket one >> bucket two >>>> bigstring :: " + bigstring_two)
+	kq, err = Parse("INS bucket one >> bucket two >>>> bigstring :: " + bigStringTwo)
 	if err != nil {
 		t.Errorf("FAIL: Parse error, unicode string incorrectly not allowed: \n %v\n", err)
-	} else if kq.Value != bigstring_two {
+	} else if kq.Value != bigStringTwo {
 		t.Errorf("FAIL: Parse error, bigstring warped on input.\n", err)
 	}
 }
