@@ -30,8 +30,8 @@ func setupstate() {
 	newname = false
 }
 
-// Parse is the primary function that any binding should care about. A valid KVAL 
-// (Key Value Access Language) query will result in a KQuery struct that can be 
+// Parse is the only function that a binding should care about. A valid KVAL
+// (Key Value Access Language) query will result in a KQuery struct that can be
 // manipulated and passed around the binding's code more easily.
 func Parse(query string) (KQuery, error) {
 
@@ -100,7 +100,7 @@ func Parse(query string) (KQuery, error) {
 			if s != 0 {
 				unicode := strconv.QuoteRuneToASCII(r)
 				return kq, errors.Wrapf(errIllegalToken, "'%s', %s.\n", lit, unicode)
-			} 
+			}
 			return kq, errors.Wrapf(errIllegalToken, "'%s'.\n", lit)
 		}
 	}
@@ -119,7 +119,7 @@ func deconstruct(kq KQuery, tok kvalscanner.Token, lit string) (KQuery, error) {
 			if kvalscanner.KeywordMap[lit] == 0 {
 				return kq, errInvalidFunction
 			}
-         //else...
+			//else...
 			kq.Function = tok
 			keyword = false
 			bucket = true
@@ -210,7 +210,7 @@ func validatequerystruct(kq KQuery) (KQuery, error) {
 			if kq.Value != "" {
 				if kq.Function == kvalscanner.GET {
 					return kq, errKeyGetRegex
-				} 
+				}
 				return kq, errKeyLisRegex
 			}
 		}

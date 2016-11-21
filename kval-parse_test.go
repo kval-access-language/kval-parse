@@ -12,7 +12,7 @@ var ExportExtendSlice = extendslice
 
 //Test Exported function Parse for basic functionality...
 func TestParse(t *testing.T) {
-	for key, query := range GoodQueryMap {
+	for key, query := range goodQueryMap {
 		kq, err := Parse(query)
 		if err != nil {
 			t.Errorf("FAIL: Parse error \n %s \n %s", query, err)

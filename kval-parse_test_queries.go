@@ -39,7 +39,7 @@ var (
 )
 
 //Queries that should work according to the KVAL specification
-var GoodQueryMap = map[string]string{
+var goodQueryMap = map[string]string{
 	"kq01_insert_value":               "ins Prime Bucket >> Secondary Bucket >> Tertiary Bucket >>>> Key :: Value",
 	"kq02_insert_value":               "INS Prime Bucket >> Secondary Bucket >> Tertiary Bucket",
 	"kq03_get_bucket_contents":        "GET Prime Bucket >> Secondary Bucket >> Tertiary Bucket",
