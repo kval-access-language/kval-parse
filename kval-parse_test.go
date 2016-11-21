@@ -78,14 +78,14 @@ func TestBigString(t *testing.T) {
 	if err != nil {
 		t.Errorf("FAIL: Parse error, unicode string incorrectly not allowed: \n %v\n", err)
 	} else if kq.Value != bigStringOne {
-		t.Errorf("FAIL: Parse error, bigstring warped on input.\n", err)
+		t.Error("FAIL: Parse error, bigstring warped on input.")
 	}
 
 	kq, err = Parse("INS bucket one >> bucket two >>>> bigstring :: " + bigStringTwo)
 	if err != nil {
 		t.Errorf("FAIL: Parse error, unicode string incorrectly not allowed: \n %v\n", err)
 	} else if kq.Value != bigStringTwo {
-		t.Errorf("FAIL: Parse error, bigstring warped on input.\n", err)
+		t.Error("FAIL: Parse error, bigstring warped on input.")
 	}
 }
 
