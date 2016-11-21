@@ -1,4 +1,4 @@
-package kvalparse 
+package kvalparse
 
 //TMP: backwards compatibility while improving tests
 var INS_base64_img_1 = "INS image bucket >>>> image1 :: " + b641
