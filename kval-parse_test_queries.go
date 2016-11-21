@@ -101,14 +101,14 @@ var BadQueryMap = map[string]string{
 }
 
 var BadQueryExpected = map[string]error{
-	"badkq01_no_buckets":  err_zero_buckets,
-	"badkq02_ins_regex":   err_ins_regex,
-	"badkq03_ins_regex":   err_ins_regex,
-	"badkq04_ins_regex":   err_ins_regex,
-	"badkq05_get_val":     err_key_get_regex,
-	"badkq06_lis_val":     err_key_lis_regex,
-	"badkq07_get_unknown": err_unk_unk,
-	"badkq08_lis_unknown": err_unk_unk,
-	"badkq09_ren_bucket":  err_no_name_rename,
-	"badkq0a_ren_key":     err_no_name_rename,
+	"badkq01_no_buckets":  errZeroBuckets,
+	"badkq02_ins_regex":   errInsertRegex,
+	"badkq03_ins_regex":   errInsertRegex,
+	"badkq04_ins_regex":   errInsertRegex,
+	"badkq05_get_val":     errKeyGetRegex,
+	"badkq06_lis_val":     errKeyLisRegex,
+	"badkq07_get_unknown": errUnknownUnknown,
+	"badkq08_lis_unknown": errUnknownUnknown,
+	"badkq09_ren_bucket":  errNoNameRename,
+	"badkq0a_ren_key":     errNoNameRename,
 }

@@ -115,7 +115,7 @@ func deconstruct(kq KQUERY, tok kvalscanner.Token, lit string) (KQUERY, error) {
 		//seek function keyword first
 		if keyword == true {
 			if kvalscanner.KeywordMap[lit] == 0 {
-				return kq, err_invalid_function
+				return kq, errInvalidFunction
 			} else {
 				kq.Function = tok
 				keyword = false
@@ -181,7 +181,7 @@ func deconstruct(kq KQUERY, tok kvalscanner.Token, lit string) (KQUERY, error) {
 		return kq, nil
 	}
 
-	return kq, errors.Wrapf(err_parsed_no_new_tokens, "'%v', '%v'", tok, lit)
+	return kq, errors.Wrapf(errParsedNoNewTokens, "'%v', '%v'", tok, lit)
 	//return kq, nil
 }
 
@@ -189,7 +189,7 @@ func deconstruct(kq KQUERY, tok kvalscanner.Token, lit string) (KQUERY, error) {
 func validatepattern(pattern string) (string, error) {
 	_, err := regexp.Compile(pattern) //n.b. CompilePOSIX() too
 	if err != nil {
-		err = err_compile_regex
+		err = errCompileRegex
 	}
 	return pattern, err
 }
@@ -197,34 +197,34 @@ func validatepattern(pattern string) (string, error) {
 func validatequerystruct(kq KQUERY) (KQUERY, error) {
 	//check for buckets
 	if len(kq.Buckets) < 1 {
-		return kq, err_zero_buckets
+		return kq, errZeroBuckets
 	}
 	if kq.Function == kvalscanner.INS && kq.Regex == true {
-		return kq, err_ins_regex
+		return kq, errInsertRegex
 	}
 	if (kq.Function == kvalscanner.LIS || kq.Function == kvalscanner.GET) && kq.Regex != true {
 		if kq.Key != "" && kq.Key != "_" {
 			//trying to use REGEX for a key that is known...
 			if kq.Value != "" {
 				if kq.Function == kvalscanner.GET {
-					return kq, err_key_get_regex
+					return kq, errKeyGetRegex
 				} else {
-					return kq, err_key_lis_regex
+					return kq, errKeyLisRegex
 				}
 			}
 		}
 	}
 	//unless we want this to be a synonym for getting all values from a bucket...
 	if (kq.Function == kvalscanner.GET || kq.Function == kvalscanner.LIS) && (kq.Key == "_" && kq.Value == "") {
-		return kq, err_unk_unk
+		return kq, errUnknownUnknown
 	}
 	//rename capability
 	if kq.Function == kvalscanner.REN && kq.Newname == "" {
-		return kq, err_no_name_rename
+		return kq, errNoNameRename
 	}
 	//searching for a known
 	if kq.Function == kvalscanner.GET && (kq.Key != "_" && kq.Key != "") && kq.Value != "" {
-		return kq, err_key_get_regex
+		return kq, errKeyGetRegex
 	}
 	return kq, nil
 }

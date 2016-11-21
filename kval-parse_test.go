@@ -43,9 +43,9 @@ func TestBase64Input(t *testing.T) {
 	}
 
 	//we want to preserve the integrity of the values, so test those
-	if kq.Value != GET_base64value_res_1 {
+	if kq.Value != getBase64valueRes1 {
 		//TODO: is outputting the base64 encoded value helpful?
-		t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", GET_base64value_res_1, kq.Value)
+		t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", getBase64valueRes1, kq.Value)
 	}
 
 	kq, err = Parse(insBase64Img2)
@@ -54,9 +54,9 @@ func TestBase64Input(t *testing.T) {
 	}
 
 	//we want to preserve the integrity of the values, so test those
-	if kq.Value != GET_base64value_res_2 {
+	if kq.Value != getBase64valueRes2 {
 		//TODO: is outputting the base64 encoded value helpful?
-		t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", GET_base64value_res_2, kq.Value)
+		t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", getBase64valueRes2, kq.Value)
 	}
 
 	kq, err = Parse(insBase64Img3)
@@ -65,9 +65,9 @@ func TestBase64Input(t *testing.T) {
 	}
 
 	//we want to preserve the integrity of the values, so test those
-	if kq.Value != GET_base64value_res_3 {
+	if kq.Value != getBase64valueRes3 {
 		//TODO: is outputting the base64 encoded value helpful?
-		t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", GET_base64value_res_3, kq.Value)
+		t.Errorf("FAIL: Parse error, base64 encoded value not preserved on parsing: \n %s \n %s", getBase64valueRes3, kq.Value)
 	}
 }
 
