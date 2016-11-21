@@ -100,9 +100,8 @@ func Parse(query string) (KQuery, error) {
 			if s != 0 {
 				unicode := strconv.QuoteRuneToASCII(r)
 				return kq, errors.Wrapf(errIllegalToken, "'%s', %s.\n", lit, unicode)
-			} else {
-				return kq, errors.Wrapf(errIllegalToken, "'%s'.\n", lit)
-			}
+			} 
+			return kq, errors.Wrapf(errIllegalToken, "'%s'.\n", lit)
 		}
 	}
 
@@ -119,12 +118,12 @@ func deconstruct(kq KQuery, tok kvalscanner.Token, lit string) (KQuery, error) {
 		if keyword == true {
 			if kvalscanner.KeywordMap[lit] == 0 {
 				return kq, errInvalidFunction
-			} else {
-				kq.Function = tok
-				keyword = false
-				bucket = true
-				return kq, nil
 			}
+         //else...
+			kq.Function = tok
+			keyword = false
+			bucket = true
+			return kq, nil
 		}
 
 		if bucket == true {
@@ -211,9 +210,8 @@ func validatequerystruct(kq KQuery) (KQuery, error) {
 			if kq.Value != "" {
 				if kq.Function == kvalscanner.GET {
 					return kq, errKeyGetRegex
-				} else {
-					return kq, errKeyLisRegex
-				}
+				} 
+				return kq, errKeyLisRegex
 			}
 		}
 	}
