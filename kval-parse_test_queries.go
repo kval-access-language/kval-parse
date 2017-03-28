@@ -36,6 +36,8 @@ var (
 	kq13 = KQuery{kvalscanner.GET, []string{"Prime Bucket"}, "_", "PATT WITH THREE SPACES", "", true}
 	kq14 = KQuery{kvalscanner.GET, []string{"Prime Bucket"}, "PATT WITH THREE SPACES", "", "", true}
 	kq15 = KQuery{kvalscanner.INS, []string{"Prime Bucket"}, "key", "value with space", "", false}
+	kq16 = KQuery{kvalscanner.INS, []string{"link index"}, "internet archive latest", "http://web.archive.org/web/20170328100131/http://www.bbc.co.uk/news/", "", false}
+	kq17 = KQuery{kvalscanner.INS, []string{"link index"}, "internet archive response code", "200", "", false}
 )
 
 //Queries that should work according to the KVAL specification
@@ -61,6 +63,8 @@ var goodQueryMap = map[string]string{
 	"kq13_regex_spaces_value":         "GET Prime Bucket >>>> _ :: {PATT WITH THREE SPACES}",
 	"kq14_regex_spaces_key":           "GET Prime Bucket >>>> {PATT WITH THREE SPACES}",
 	"kq15_value_spaces":               "INS Prime Bucket >>>> key :: value with space",
+	"kq16_value_hyperlink":            "INS link index >>>> internet archive latest :: http://web.archive.org/web/20170328100131/http://www.bbc.co.uk/news/",
+	"kq17_value_number":               "INS link index >>>> internet archive response code :: 200",
 }
 
 var goodQueryExpected = map[string]KQuery{
@@ -85,6 +89,8 @@ var goodQueryExpected = map[string]KQuery{
 	"kq13_regex_spaces_value":         kq13,
 	"kq14_regex_spaces_key":           kq14,
 	"kq15_value_spaces":               kq15,
+	"kq16_value_hyperlink":            kq16,
+	"kq17_value_number":               kq17,
 }
 
 var badQueryMap = map[string]string{
