@@ -6,7 +6,7 @@
 
 Parser written in Golang for a simple key value access language. 
 
-###Key Value Access Language
+### Key Value Access Language
 
 I have created a modest specification for a key value access langauge. 
 It allows for input and access of values to a key value store such as Golang's
@@ -14,7 +14,7 @@ It allows for input and access of values to a key value store such as Golang's
 
 The language specification: https://github.com/kval-access-language/KVAL 
 
-###Usage
+### Usage
 
 Import the library and run the Parse function() e.g: 
 
@@ -36,6 +36,6 @@ structure:
        Regex bool
     }
 
-###License
+### License
 
 **[GPL Version 3](http://choosealicense.com/licenses/gpl-3.0/)**: https://github.com/kval-access-language/KVAL-BoltDB/blob/master/LICENSE
