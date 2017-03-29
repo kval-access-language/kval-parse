@@ -116,6 +116,7 @@ func deconstruct(kq KQuery, tok kvalscanner.Token, lit string) (KQuery, error) {
 	if !value {
 		//seek function keyword first
 		if keyword == true {
+			lit = strings.ToUpper(lit)
 			if kvalscanner.KeywordMap[lit] == 0 {
 				return kq, errInvalidFunction
 			}

@@ -49,7 +49,7 @@ var goodQueryMap = map[string]string{
 	"kq03_get_bucket_contents":        "GET Prime Bucket >> Secondary Bucket >> Tertiary Bucket",
 	"kq04_get_value":                  "GET Prime Bucket >> Secondary Bucket >> Tertiary Bucket >>>> Key",
 	"kq05_get_value_from_key_pattern": "get Prime Bucket >> Secondary Bucket >> Tertiary Bucket >>>> {PAT}",
-	"kq06_get_key_from_value":         "GET Prime Bucket >> Secondary Bucket >> Tertiary Bucket >>>> _ :: Value",
+	"kq06_get_key_from_value":         "GeT Prime Bucket >> Secondary Bucket >> Tertiary Bucket >>>> _ :: Value",
 	"kq07_get_key_from_value_pattern": "GET Prime Bucket >> Secondary Bucket >> Tertiary Bucket >>>> _ :: {PAT}",
 	"kq08_does_key_exist":             "LIS Prime Bucket >> Secondary Bucket >> Tertiary Bucket >>>> Key",
 	"kq09_does_bucket_exist":          "LIS Prime Bucket >> Secondary Bucket >> Tertiary Bucket",
@@ -68,7 +68,7 @@ var goodQueryMap = map[string]string{
 	"kq16_value_hyperlink":            "INS link index >>>> internet archive latest :: http://web.archive.org/web/20170328100131/http://www.bbc.co.uk/news/",
 	"kq17_value_number":               "INS link index >>>> internet archive response code :: 200",
 	"kq18_first_bucket":               "GET Prime Bucket",
-	"kq19_prime_bucket":               "GET _",	
+	"kq19_prime_bucket":               "GET _",
 }
 
 var goodQueryExpected = map[string]KQuery{
@@ -96,7 +96,7 @@ var goodQueryExpected = map[string]KQuery{
 	"kq16_value_hyperlink":            kq16,
 	"kq17_value_number":               kq17,
 	"kq18_first_bucket":               kq18,
-	"kq19_prime_bucket":               kq19,	
+	"kq19_prime_bucket":               kq19,
 }
 
 var badQueryMap = map[string]string{
