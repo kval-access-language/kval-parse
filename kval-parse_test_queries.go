@@ -66,7 +66,7 @@ var goodQueryMap = map[string]string{
 	"kq15_value_spaces":               "INS Prime Bucket >>>> key :: value with space",
 	"kq16_value_hyperlink":            "INS link index >>>> internet archive latest :: http://web.archive.org/web/20170328100131/http://www.bbc.co.uk/news/",
 	"kq17_value_number":               "INS link index >>>> internet archive response code :: 200",
-	"kq18_first_bucket":               "GET Prime Bucket",	
+	"kq18_first_bucket":               "GET Prime Bucket",
 }
 
 var goodQueryExpected = map[string]KQuery{
@@ -93,7 +93,7 @@ var goodQueryExpected = map[string]KQuery{
 	"kq15_value_spaces":               kq15,
 	"kq16_value_hyperlink":            kq16,
 	"kq17_value_number":               kq17,
-	"kq18_first_bucket":					  kq18,
+	"kq18_first_bucket":               kq18,
 }
 
 var badQueryMap = map[string]string{
