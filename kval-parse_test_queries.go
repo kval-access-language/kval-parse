@@ -39,6 +39,7 @@ var (
 	kq16 = KQuery{kvalscanner.INS, []string{"link index"}, "internet archive latest", "http://web.archive.org/web/20170328100131/http://www.bbc.co.uk/news/", "", false}
 	kq17 = KQuery{kvalscanner.INS, []string{"link index"}, "internet archive response code", "200", "", false}
 	kq18 = KQuery{kvalscanner.GET, []string{"Prime Bucket"}, "", "", "", false}
+	kq19 = KQuery{kvalscanner.GET, []string{"_"}, "", "", "", false}
 )
 
 //Queries that should work according to the KVAL specification
@@ -67,6 +68,7 @@ var goodQueryMap = map[string]string{
 	"kq16_value_hyperlink":            "INS link index >>>> internet archive latest :: http://web.archive.org/web/20170328100131/http://www.bbc.co.uk/news/",
 	"kq17_value_number":               "INS link index >>>> internet archive response code :: 200",
 	"kq18_first_bucket":               "GET Prime Bucket",
+	"kq19_prime_bucket":               "GET _",	
 }
 
 var goodQueryExpected = map[string]KQuery{
@@ -94,6 +96,7 @@ var goodQueryExpected = map[string]KQuery{
 	"kq16_value_hyperlink":            kq16,
 	"kq17_value_number":               kq17,
 	"kq18_first_bucket":               kq18,
+	"kq19_prime_bucket":               kq19,	
 }
 
 var badQueryMap = map[string]string{
